@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mental Health Journal</title>
+  <style>
+    /* Aesthetic background styling */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f2f7ff, #dceeff);
+      background-image: url("back4.jpg");
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: #333;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.92);
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 40px;
+      border-radius: 14px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    h1, h2, h3 {
+      color: #2c3e50;
+      margin-bottom: 16px;
+    }
+
+    input[type="text"],
+    select,
+    textarea,
+    input[type="file"] {
+      padding: 12px;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #5DADE2;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #3498DB;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+    .entry {
+      background-color: #fefefe;
+      border-left: 5px solid #5DADE2;
+      padding: 12px 18px;
+      margin-top: 14px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    video, audio {
+      display: block;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    @media (max-width: 600px) {
+      .section {
+        margin: 20px;
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <h1> Welcome to Your Mental Health Journal</h1>
+
+    <input type="text" id="username" placeholder="Enter your name to log in" />
+    <button onclick="logIn()">Log In</button>
+
+    <div id="journal-section" class="hidden">
+      <h2>Hey👋, how are you doing today?</h2>
+
+      <label for="mood">Mood:</label>
+      <select id="mood">
+        <option>Happy</option>
+        <option>Sad</option>
+        <option>Angry</option>
+        <option>Anxious</option>
+        <option>Excited</option>
+      </select>
+
+      <label for="entryText">Write how you're feeling:</label>
+      <textarea id="entryText" placeholder="Write how you're feeling..."></textarea>
+
+      <label for="mediaInput">Optional: Add a recording or video</label>
+      <input type="file" id="mediaInput" accept="audio/*,video/*" />
+
+      <button onclick="saveEntry()">Save Entry</button>
+
+      <h3>📂 Your Entries</h3>
+      <div id="entriesContainer"></div>
+
+      <button onclick="logOut()">Log Out</button>
+    </div>
+  </div>
+
+  <script>
+    function logIn() {
+      const name = document.getElementById('username').value.trim();
+      if (name) {
+        document.getElementById('journal-section').classList.remove('hidden');
+        document.getElementById('username').style.display = 'none';
+        document.querySelector('button').style.display = 'none';
+      } else {
+        alert('Please enter your name.');
+      }
+    }
+
+    function saveEntry() {
+      const mood = document.getElementById('mood').value;
+      const text = document.getElementById('entryText').value.trim();
+      const media = document.getElementById('mediaInput').files[0];
+
+      if (!text && !media) {
+        alert('Please write something or attach a file.');
+        return;
+      }
+
+      const entry = document.createElement('div');
+      entry.className = 'entry';
+      entry.innerHTML = `<strong>Mood:</strong> ${mood}<br><strong>Note:</strong> ${text || "No text"}<br>`;
+
+      if (media) {
+        const mediaURL = URL.createObjectURL(media);
+        if (media.type.startsWith("video")) {
+          const video = document.createElement('video');
+          video.src = mediaURL;
+          video.controls = true;
+          entry.appendChild(video);
+        } else if (media.type.startsWith("audio")) {
+          const audio = document.createElement('audio');
+          audio.src = mediaURL;
+          audio.controls = true;
+          entry.appendChild(audio);
+        }
+      }
+
+      document.getElementById('entriesContainer').appendChild(entry);
+      document.getElementById('entryText').value = '';
+      document.getElementById('mediaInput').value = '';
+    }
+
+    function logOut() {
+      location.reload();
+    }
+  </script>
+
+</body>
+</html>
