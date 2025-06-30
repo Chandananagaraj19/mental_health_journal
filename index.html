@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mental Health Journal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="section">
+    <h1> Welcome to Your Mental Health Journal</h1>
+
+    <input type="text" id="username" placeholder="Enter your name to log in" />
+    <button onclick="logIn()">Log In</button>
+
+    <div id="journal-section" class="hidden">
+      <h2>Hey👋, how are you doing today?</h2>
+
+      <label for="mood">Mood:</label>
+      <select id="mood">
+        <option>Happy</option>
+        <option>Sad</option>
+        <option>Angry</option>
+        <option>Anxious</option>
+        <option>Excited</option>
+      </select>
+
+      <label for="entryText">Write how you're feeling:</label>
+      <textarea id="entryText" placeholder="Write how you're feeling..."></textarea>
+
+      <label for="mediaInput">Optional: Add a recording or video</label>
+      <input type="file" id="mediaInput" accept="audio/*,video/*" />
+
+      <button onclick="saveEntry()">Save Entry</button>
+
+      <h3>📂 Your Entries</h3>
+      <div id="entriesContainer"></div>
+
+      <button onclick="logOut()">Log Out</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
